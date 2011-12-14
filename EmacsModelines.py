@@ -45,7 +45,7 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
         for line in lines:
             m = re.match(MODELINE_RE, view.substr(line))
             if m:
-                modeline = m.group(1)
+                modeline = m.group(1).lower()
 
                 # Split into options
                 for opt in modeline.split(';'):
