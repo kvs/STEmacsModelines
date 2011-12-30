@@ -1,0 +1,6 @@
+<snippet>
+    <content><![CDATA[-*- mode: $1; tab-width: $2; indent-tabs-mode: $3 -*-
+]]></content>
+    <tabTrigger>-*-</tabTrigger>
+    <description>modeline</description>
+</snippet>
