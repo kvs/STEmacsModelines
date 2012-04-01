@@ -55,7 +55,8 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                         key, value = opts.group(1), opts.group(2)
 
                         if key == "mode":
-                            view.settings().set('syntax', self._modes[value])
+                            if self._modes.has_key(value):
+                                view.settings().set('syntax', self._modes[value])
                         elif key == "indent-tabs-mode":
                             if value == "nil" or value.strip == "0":
                                 view.settings().set('translate_tabs_to_spaces', True)
