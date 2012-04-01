@@ -39,3 +39,12 @@ ships with a mapping from "Bash" (emacs) to "Shell-Unix-Generic" (sublime).
 
 * [Vim-style modelines](https://github.com/SublimeText/Modelines)
 * [More Emacs-style hacks](http://software.clapper.org/ST2EmacsMiscellanea/)
+
+
+## Meta
+
+Created by Kenneth Vestergaard.
+
+Patches contributed by Ash Berlin.
+
+Released under the MIT License: http://www.opensource.org/licenses/mit-license.php
