@@ -18,8 +18,16 @@ or
 
 	-*- syntax -*-
 
-Currently, only 'mode', 'tab-width' and 'indent-tabs-mode' are supported.
+Currently, only '`mode`', '`tab-width`' and '`indent-tabs-mode`' are supported.
 
+The values for '`mode`' are the root filename of the .tmLanaguge file. Most of
+the time these are obvious and match the syntax name but not all the time. For
+example the 'Graphviz (DOT)' syntax is simply 'dot'. To find out the correct
+value you can run this command in the console (ctrl+\`) when the syntax you want is in
+use:
+
+	view.settings().get('syntax')
+	# u'Packages/Graphviz/DOT.tmLanguage' -> 'DOT' is the mode value needed.
 
 ## Alternatives
 
