@@ -15,6 +15,9 @@ MODELINE_MAX_LINES = 5
 
 
 class EmacsModelinesListener(sublime_plugin.EventListener):
+
+    settings = None
+
     def __init__(self):
         self._modes = {}
 
@@ -25,6 +28,13 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                     name = os.path.splitext(os.path.basename(f))[0].lower()
                     syntax_file = re.match(r'^.+/(Packages/.+)$', f).group(1)
                     self._modes[name] = syntax_file
+
+        # Load custom mappings from the settings file
+        self.settings = sublime.load_settings( __name__ + ".sublime-settings" )
+
+        if self.settings.has("mode_mappings"):
+            for modeline,syntax in self.settings.get("mode_mappings").items():
+             self._modes[modeline] = self._modes[syntax.lower()]
 
     def on_load(self, view):
         self.parse_modelines(view)

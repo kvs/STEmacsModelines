@@ -29,6 +29,12 @@ use:
 	view.settings().get('syntax')
 	# u'Packages/Graphviz/DOT.tmLanguage' -> 'DOT' is the mode value needed.
 
+If you want to use the same mode line settings with an emacs user you might need
+to set up mappings from the emacs names to the sublime syntax names. To do this
+look at the `mode_mappings` key in the settings file (which you can edit via the
+menu Preferences, Package Settings, Emacs Modelines). As an example this package
+ships with a mapping from "Bash" (emacs) to "Shell-Unix-Generic" (sublime).
+
 ## Alternatives
 
 * [Vim-style modelines](https://github.com/SublimeText/Modelines)
