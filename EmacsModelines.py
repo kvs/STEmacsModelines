@@ -13,6 +13,16 @@ import os
 MODELINE_RE = r'.*-\*-\s*(.+?)\s*-\*-.*'
 MODELINE_MAX_LINES = 5
 
+def to_json_type(v):
+    """"Convert string value to proper JSON type.
+    """
+    if v.lower() in ('true', 'false'):
+        v = v[0].upper() + v[1:].lower()
+
+    try:
+        return eval(v, {}, {})
+    except:
+        raise ValueError("Could not convert to JSON type.")
 
 class EmacsModelinesListener(sublime_plugin.EventListener):
 
@@ -81,6 +91,9 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                         elif key == "sublime":
                             # FIXME: missing
                             pass
+                        else:
+                            #print "settings().set(%s, %s)" % (key, value)
+                            view.settings().set(key, to_json_type(value))
                     else:
                         # Not a 'key: value'-pair - assume it's a syntax-name
                         if opt.strip() in self._modes:
