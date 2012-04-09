@@ -26,7 +26,11 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                 if f.endswith('.tmLanguage'):
                     f = os.path.join(root, f)
                     name = os.path.splitext(os.path.basename(f))[0].lower()
-                    syntax_file = re.match(r'^.+/(Packages/.+)$', f).group(1)
+                    regex = "^.+\%s(Packages\%s.+)$" % (os.sep, os.sep)
+                    #ToDO: check return value of regex match to check for errors
+                    syntax_file = re.match(regex, f).group(1)
+                    # change to unix-like path for settings()
+                    syntax_file = syntax_file.replace("\\", "/")
                     self._modes[name] = syntax_file
 
         # Load custom mappings from the settings file
