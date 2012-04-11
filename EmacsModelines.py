@@ -24,9 +24,9 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
         for root, dirs, files in os.walk(sublime.packages_path()):
             for f in files:
                 if f.endswith('.tmLanguage'):
-                    f = os.path.join(root, f)
-                    name = os.path.splitext(os.path.basename(f))[0].lower()
-                    syntax_file = re.match(r'^.+/(Packages/.+)$', f).group(1)
+                    langfile = os.path.relpath(os.path.join(root, f), sublime.packages_path())
+                    name = os.path.splitext(os.path.basename(langfile))[0].lower()
+                    syntax_file = os.path.join('Packages', langfile)
                     self._modes[name] = syntax_file
 
         # Load custom mappings from the settings file
