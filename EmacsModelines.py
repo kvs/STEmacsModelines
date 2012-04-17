@@ -34,21 +34,19 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
         for root, dirs, files in os.walk(sublime.packages_path()):
             for f in files:
                 if f.endswith('.tmLanguage'):
-                    f = os.path.join(root, f)
-                    name = os.path.splitext(os.path.basename(f))[0].lower()
-                    regex = "^.+\%s(Packages\%s.+)$" % (os.sep, os.sep)
-                    #ToDO: check return value of regex match to check for errors
-                    syntax_file = re.match(regex, f).group(1)
-                    # change to unix-like path for settings()
+                    langfile = os.path.relpath(os.path.join(root, f), sublime.packages_path())
+                    name = os.path.splitext(os.path.basename(langfile))[0].lower()
+                    syntax_file = os.path.join('Packages', langfile)
+                    # ST2 (as of build 2181) requires unix/MSYS style paths for the 'syntax' view setting
                     syntax_file = syntax_file.replace("\\", "/")
                     self._modes[name] = syntax_file
 
         # Load custom mappings from the settings file
-        self.settings = sublime.load_settings( __name__ + ".sublime-settings" )
+        self.settings = sublime.load_settings(__name__ + ".sublime-settings")
 
         if self.settings.has("mode_mappings"):
-            for modeline,syntax in self.settings.get("mode_mappings").items():
-             self._modes[modeline] = self._modes[syntax.lower()]
+            for modeline, syntax in self.settings.get("mode_mappings").items():
+                self._modes[modeline] = self._modes[syntax.lower()]
 
     def on_load(self, view):
         self.parse_modelines(view)
@@ -79,7 +77,7 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                         key, value = opts.group(1), opts.group(2)
 
                         if key == "mode":
-                            if self._modes.has_key(value):
+                            if value in self._modes:
                                 view.settings().set('syntax', self._modes[value])
                         elif key == "indent-tabs-mode":
                             if value == "nil" or value.strip == "0":
