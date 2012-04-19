@@ -14,6 +14,7 @@ MODELINE_RE = r'.*-\*-\s*(.+?)\s*-\*-.*'
 MODELINE_MAX_LINES = 5
 
 def to_json_type(v):
+    # from "https://github.com/SublimeText/Modelines/blob/master/sublime_modelines.py"
     """"Convert string value to proper JSON type.
     """
     if v.lower() in ('true', 'false'):
@@ -71,27 +72,24 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
 
                 # Split into options
                 for opt in modeline.split(';'):
-                    opts = re.match('\s*(.+):\s*(.+)\s*', opt)
+                    opts = re.match('\s*(st-|sublime-text-|sublime-|sublimetext-)?(.+):\s*(.+)\s*', opt)
 
                     if opts:
-                        key, value = opts.group(1), opts.group(2)
+                        key, value = opts.group(2), opts.group(3)
 
-                        if key == "mode":
-                            if value in self._modes:
-                                view.settings().set('syntax', self._modes[value])
+                        if opts.group(1):
+                            #print "settings().set(%s, %s)" % (key, value)
+                            view.settings().set(key, to_json_type(value))
                         elif key == "indent-tabs-mode":
                             if value == "nil" or value.strip == "0":
                                 view.settings().set('translate_tabs_to_spaces', True)
                             else:
                                 view.settings().set('translate_tabs_to_spaces', False)
+                        elif key == "mode":
+                            if self._modes.has_key(value):
+                                view.settings().set('syntax', self._modes[value])
                         elif key == "tab-width":
                             view.settings().set('tab_size', int(value))
-                        elif key == "sublime":
-                            # FIXME: missing
-                            pass
-                        else:
-                            #print "settings().set(%s, %s)" % (key, value)
-                            view.settings().set(key, to_json_type(value))
                     else:
                         # Not a 'key: value'-pair - assume it's a syntax-name
                         if opt.strip() in self._modes:
