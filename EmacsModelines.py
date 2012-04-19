@@ -5,6 +5,10 @@
 #
 # Currently supports setting mode (syntax), tab-width and tab-mode.
 
+# URLref: [Emacs - Specifying File Variables] http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html @@ http://www.webcitation.org/66xWWwjTt
+# URLref: [Emacs - Coding Systems] http://www.gnu.org/software/emacs/manual/html_node/emacs/Coding-Systems.html @@ http://www.webcitation.org/66xX3pMc1
+# URLref: [Emacs - Specifying a File's Coding System] http://www.gnu.org/software/emacs/manual/html_node/emacs/Specify-Coding.html @@ http://www.webcitation.org/66xZ1nDWp
+
 import sublime
 import sublime_plugin
 import re
@@ -80,6 +84,13 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                         if opts.group(1):
                             #print "settings().set(%s, %s)" % (key, value)
                             view.settings().set(key, to_json_type(value))
+                        elif key == "coding":
+                            value = re.match('(?:.+-)?(unix|dos|mac)', value).group(1)
+                            if value == "dos":
+                                value = "windows"
+                            if value == "mac":
+                                value = "CR"
+                            view.set_line_endings(value)
                         elif key == "indent-tabs-mode":
                             if value == "nil" or value.strip == "0":
                                 view.settings().set('translate_tabs_to_spaces', True)
