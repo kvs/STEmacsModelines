@@ -17,6 +17,7 @@ import os
 MODELINE_RE = r'.*-\*-\s*(.+?)\s*-\*-.*'
 MODELINE_MAX_LINES = 5
 
+
 def to_json_type(v):
     # from "https://github.com/SublimeText/Modelines/blob/master/sublime_modelines.py"
     """"Convert string value to proper JSON type.
@@ -28,6 +29,7 @@ def to_json_type(v):
         return eval(v, {}, {})
     except:
         raise ValueError("Could not convert to JSON type.")
+
 
 class EmacsModelinesListener(sublime_plugin.EventListener):
 
@@ -97,7 +99,7 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                             else:
                                 view.settings().set('translate_tabs_to_spaces', False)
                         elif key == "mode":
-                            if self._modes.has_key(value):
+                            if value in self._modes:
                                 view.settings().set('syntax', self._modes[value])
                         elif key == "tab-width":
                             view.settings().set('tab_size', int(value))
