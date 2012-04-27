@@ -2,8 +2,6 @@
 #
 # Parses any '-*- ... -*-'-style modeline within the first 5 lines of a
 # view, and sets a few variables.
-#
-# Currently supports setting mode (syntax), tab-width and tab-mode.
 
 # URLref: [Emacs - Specifying File Variables] http://www.gnu.org/software/emacs/manual/html_node/emacs/Specifying-File-Variables.html @@ http://www.webcitation.org/66xWWwjTt
 # URLref: [Emacs - Coding Systems] http://www.gnu.org/software/emacs/manual/html_node/emacs/Coding-Systems.html @@ http://www.webcitation.org/66xX3pMc1
