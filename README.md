@@ -18,7 +18,10 @@ or
 
 	-*- syntax -*-
 
-Currently, only '`mode`', '`tab-width`' and '`indent-tabs-mode`' are supported.
+Supported settings are '`mode`', '`tab-width`', '`indent-tabs-mode`', '`coding`', and '`sublime-*`.
+
+Specifying '`sublime-`' (or '`st-`') allows changing Sublime Text preferences for that view. For
+example, specifying '`st-trim_automatic_white_space: false`' disables automatic whitespace trimming.
 
 The values for '`mode`' are the root filename of the .tmLanaguge file. Most of
 the time these are obvious and match the syntax name but not all the time. For
