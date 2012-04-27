@@ -48,6 +48,6 @@ ships with a mapping from "Bash" (emacs) to "Shell-Unix-Generic" (sublime).
 
 Created by Kenneth Vestergaard.
 
-Patches contributed by Ash Berlin.
+Patches contributed by [Ash Berlin](https://github.com/ashb) and [Roy Ivy III](https://github.com/rivy).
 
 Released under the MIT License: http://www.opensource.org/licenses/mit-license.php
