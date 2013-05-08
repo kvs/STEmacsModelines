@@ -1,6 +1,6 @@
 # Emacs-like Sublime Modeline
 
-Parse Emacs-like modelines, and set buffer-local settings.
+Parse Emacs-like modelines, and set buffer-local settings for Sublime Text 2 and 3.
 
 
 ## Installing
