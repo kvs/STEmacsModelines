@@ -36,15 +36,9 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
     def __init__(self):
         self._modes = {}
 
-        for root, dirs, files in os.walk(sublime.packages_path()):
-            for f in files:
-                if f.endswith('.tmLanguage'):
-                    langfile = os.path.relpath(os.path.join(root, f), sublime.packages_path())
-                    name = os.path.splitext(os.path.basename(langfile))[0].lower()
-                    syntax_file = os.path.join('Packages', langfile)
-                    # ST2 (as of build 2181) requires unix/MSYS style paths for the 'syntax' view setting
-                    syntax_file = syntax_file.replace("\\", "/")
-                    self._modes[name] = syntax_file
+        for syntax_file in self.find_syntax_files():
+            name = os.path.splitext(os.path.basename(syntax_file))[0].lower()
+            self._modes[name] = syntax_file
 
         # Load custom mappings from the settings file
         self.settings = sublime.load_settings(__name__ + ".sublime-settings")
@@ -53,6 +47,18 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
             for modeline, syntax in self.settings.get("mode_mappings").items():
                 self._modes[modeline] = self._modes[syntax.lower()]
 
+    def find_syntax_files(self):
+        # ST3
+        if hasattr(sublime, 'find_resources'):
+            for f in sublime.find_resources("*.tmLanguage"):
+                yield f
+        else:
+            for root, dirs, files in os.walk(sublime.packages_path()):
+                for f in files:
+                    if f.endswith(".tmLanguage"):
+                        langfile = os.path.relpath(os.path.join(root, f), sublime.packages_path())
+                        # ST2 (as of build 2181) requires unix/MSYS style paths for the 'syntax' view setting
+                        yield os.path.join('Packages', langFile).replace("\\", "/")
     def on_load(self, view):
         self.parse_modelines(view)
 
