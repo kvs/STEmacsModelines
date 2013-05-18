@@ -41,10 +41,14 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
             self._modes[name] = syntax_file
 
         # Load custom mappings from the settings file
-        self.settings = sublime.load_settings(__name__ + ".sublime-settings")
+        self.settings = sublime.load_settings("EmacsModelines.sublime-settings")
 
         if self.settings.has("mode_mappings"):
             for modeline, syntax in self.settings.get("mode_mappings").items():
+                self._modes[modeline] = self._modes[syntax.lower()]
+
+        if self.settings.has("user_mode_mappings"):
+            for modeline, syntax in self.settings.get("user_mode_mappings").items():
                 self._modes[modeline] = self._modes[syntax.lower()]
 
     def find_syntax_files(self):

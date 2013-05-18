@@ -1,7 +1,11 @@
 {
-
+  // Built-in mode mappings
   "mode_mappings" : {
     "bash": "Shell-Unix-Generic"
+  },
+
+  // User-added mode mappings
+  "user_mode_mappings" : {
   }
 
 }

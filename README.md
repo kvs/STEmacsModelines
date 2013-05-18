@@ -38,6 +38,9 @@ look at the `mode_mappings` key in the settings file (which you can edit via the
 menu Preferences, Package Settings, Emacs Modelines). As an example this package
 ships with a mapping from "Bash" (emacs) to "Shell-Unix-Generic" (sublime).
 
+If you want to preserve the default `mode_mappings`, you can also add your own
+to `user_mode_mappings`.
+
 ## Alternatives
 
 * [Vim-style modelines](https://github.com/SublimeText/Modelines)
