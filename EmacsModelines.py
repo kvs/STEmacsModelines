@@ -62,7 +62,7 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                     if f.endswith(".tmLanguage"):
                         langfile = os.path.relpath(os.path.join(root, f), sublime.packages_path())
                         # ST2 (as of build 2181) requires unix/MSYS style paths for the 'syntax' view setting
-                        yield os.path.join('Packages', langFile).replace("\\", "/")
+                        yield os.path.join('Packages', langfile).replace("\\", "/")
     def on_load(self, view):
         self.parse_modelines(view)
 
