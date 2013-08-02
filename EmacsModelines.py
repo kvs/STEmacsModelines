@@ -36,6 +36,7 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
     def __init__(self):
         self._modes = {}
 
+    def init_syntax_files(self):
         for syntax_file in self.find_syntax_files():
             name = os.path.splitext(os.path.basename(syntax_file))[0].lower()
             self._modes[name] = syntax_file
@@ -63,6 +64,7 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                         langfile = os.path.relpath(os.path.join(root, f), sublime.packages_path())
                         # ST2 (as of build 2181) requires unix/MSYS style paths for the 'syntax' view setting
                         yield os.path.join('Packages', langfile).replace("\\", "/")
+
     def on_load(self, view):
         self.parse_modelines(view)
 
@@ -73,6 +75,9 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
         self.parse_modelines(view)
 
     def parse_modelines(self, view):
+        if not self._modes:
+            self.init_syntax_files()
+
         # Grab lines from beginning of view
         regionEnd = view.text_point(MODELINE_MAX_LINES, 0)
         region = sublime.Region(0, regionEnd)
