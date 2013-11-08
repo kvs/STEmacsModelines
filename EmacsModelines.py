@@ -82,6 +82,14 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
         regionEnd = view.text_point(MODELINE_MAX_LINES, 0)
         region = sublime.Region(0, regionEnd)
         lines = view.lines(region)
+        # Get the last line in the file
+        line = view.line(view.size())
+        # Add the last N lines of the file to the lines list
+        for i in range(1, MODELINE_MAX_LINES):
+            # Add the line to the list of lines
+            lines.append(line)
+            # Move the line to the previous line
+            line = view.line(line.a - 1)
 
         # Look for modeline regexp
         for line in lines:
