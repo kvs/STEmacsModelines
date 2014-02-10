@@ -108,7 +108,10 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
                             #print "settings().set(%s, %s)" % (key, value)
                             view.settings().set(key, to_json_type(value))
                         elif key == "coding":
-                            value = re.match('(?:.+-)?(unix|dos|mac)', value).group(1)
+                            match = re.match('(?:.+-)?(unix|dos|mac)', value)
+                            if not match:
+                                continue
+                            value = match.group(1)
                             if value == "dos":
                                 value = "windows"
                             if value == "mac":
