@@ -57,10 +57,12 @@ class EmacsModelinesListener(sublime_plugin.EventListener):
         if hasattr(sublime, 'find_resources'):
             for f in sublime.find_resources("*.tmLanguage"):
                 yield f
+            for f in sublime.find_resources("*.sublime-syntax"):
+                yield f
         else:
             for root, dirs, files in os.walk(sublime.packages_path()):
                 for f in files:
-                    if f.endswith(".tmLanguage"):
+                    if f.endswith(".tmLanguage") or f.endswith("*.sublime-syntax"):
                         langfile = os.path.relpath(os.path.join(root, f), sublime.packages_path())
                         # ST2 (as of build 2181) requires unix/MSYS style paths for the 'syntax' view setting
                         yield os.path.join('Packages', langfile).replace("\\", "/")
